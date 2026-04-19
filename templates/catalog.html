@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Event Catalog</h2>
+
+{% for e in events %}
+<div class="card event">
+
+    <div>
+        <h3>{{ e['event_name'] }}</h3>
+        <p>{{ e['event_date'] }}</p>
+    </div>
+
+    <div>
+        <a href="/event/{{ e['event_id'] }}" class="btn">View Details</a>
+        <a href="/join/{{ e['event_id'] }}" class="btn">Join Event</a>
+    </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}

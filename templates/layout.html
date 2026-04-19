@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EventU-Learn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="topbar">
+    <h2>EventU-Learn</h2>
+    <a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

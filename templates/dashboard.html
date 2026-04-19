@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% if role == 'admin' %}
+
+<h2>Admin Dashboard</h2>
+
+<div class="dashboard-container">
+
+    <div class="dashboard-left">
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <h3>{{ events|length }}</h3>
+                <p>Total Events</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ events|sum(attribute='total') }}</h3>
+                <p>Total Registrations</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ events|selectattr('capacity')|list|length }}</h3>
+                <p>With Capacity Set</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>Active</h3>
+                <p>Status</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Event Analytics</h3>
+            <canvas id="eventChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="dashboard-right">
+        <a href="/create_event" class="btn">+ Add Event</a>
+
+        {% for e in events %}
+        <div class="event-mini">
+            <div>
+                <h4>{{ e['event_name'] }}</h4>
+                <p>{{ e['event_date'] }}</p>
+                <p>{{ e['venue'] }}</p>
+            </div>
+
+            <div>
+                <a href="/event/{{ e['event_id'] }}" class="btn icon-btn">View</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('eventChart');
+
+const labels = [
+    {% for e in events %}
+        "{{ e['event_name'] }}",
+    {% endfor %}
+];
+
+const data = [
+    {% for e in events %}
+        {{ e['total'] }},
+    {% endfor %}
+];
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Registrations',
+            data: data,
+            backgroundColor: '#c62828'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        }
+    }
+});
+</script>
+
+{% else %}
+
+<h2>Events</h2>
+
+<div class="events-container">
+
+    <!-- AVAILABLE -->
+    <div class="events-column">
+        <h3>Available Events</h3>
+
+        {% set available_events = events | selectattr('event_date', '>=', current_date) | list %}
+
+        {% if available_events %}
+            {% for e in available_events %}
+            <div class="card event">
+                <div>
+                    <h3>{{ e['event_name'] }}</h3>
+                    <p>{{ e['event_date'] }} | {{ e['venue'] }}</p>
+                    <p>{{ e['short_desc'] }}</p>
+                </div>
+
+                <a href="/event/{{ e['event_id'] }}" class="btn">View</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No available events.</p>
+        {% endif %}
+    </div>
+
+    <!-- UPCOMING -->
+    <div class="events-column">
+        <h3>Upcoming Events</h3>
+
+        {% set upcoming_events = events | selectattr('event_date', '>', current_date) | list %}
+
+        {% if upcoming_events %}
+            {% for e in upcoming_events %}
+            <div class="card event">
+                <div>
+                    <h3>{{ e['event_name'] }}</h3>
+                    <p>{{ e['event_date'] }} | {{ e['venue'] }}</p>
+                    <p>{{ e['short_desc'] }}</p>
+                </div>
+
+                <a href="/event/{{ e['event_id'] }}" class="btn">View</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No upcoming events.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

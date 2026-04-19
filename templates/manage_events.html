@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Manage Events</h2>
+
+{% for e in events %}
+<div class="card event">
+
+    <div class="event-info">
+        <h3>{{ e['event_name'] }}</h3>
+        <p>{{ e['event_date'] }}</p>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ (e['total'] / e['capacity']) * 100 }}%"></div>
+        </div>
+
+        <div class="capacity-text">
+            {{ e['total'] }}/{{ e['capacity'] }} participants
+        </div>
+    </div>
+
+    <div class="event-actions">
+
+        <a href="/event/{{ e['event_id'] }}" class="btn icon-btn">👁</a>
+
+        <a href="/edit_event/{{ e['event_id'] }}" class="btn icon-btn">✏️</a>
+
+        <a href="/delete_event/{{ e['event_id'] }}" class="btn icon-btn delete">🗑 </a>
+
+    </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<h2>Join {{ event.title }}</h2>
+
+<form method="POST" action="/submit_registration/{{ event.id }}">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="course" placeholder="Course/Section" required>
+    <input type="email" name="email" placeholder="Email" required>
+
+    <button type="submit">Submit & Generate Ticket</button>
+</form>

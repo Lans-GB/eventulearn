@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="login-box">
+    <h2>Login</h2>
+
+    <form method="POST">
+        <input type="text" name="sr_code" placeholder="SR Code (xx-xxxxx)" required>
+        <input type="password" name="password" placeholder="Password">
+        <button>Login</button>
+
+<a href="#" class="forgot-password">Forgot Password?</a>
+    </form>
+</div>

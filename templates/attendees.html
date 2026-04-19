@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2>Attendees</h2>
+
+{% for a in data %}
+<div class="card ticket-box">
+
+    <div class="ticket-left">
+        <p style="font-size:12px;">QR</p>
+        <strong>{{ a['qr_code'] }}</strong>
+    </div>
+
+    <div class="ticket-right">
+        <h3>{{ a['name'] }}</h3>
+        <p>{{ a['email'] }}</p>
+    </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}

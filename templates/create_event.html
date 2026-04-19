@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Create Event</h2>
+
+<div class="card">
+<form method="POST" action="/create_event" enctype="multipart/form-data">
+
+    <!-- EVENT NAME -->
+    <label>Event Name</label>
+    <input type="text" name="event_name" required>
+
+    <!-- ORGANIZER (DROPDOWN + CUSTOM) -->
+    <label>Organizer</label>
+    <select name="organizer" id="organizerSelect" onchange="toggleOrganizerInput()">
+        <option value="SSC">SSC</option>
+        <option value="JPCS">JPCS</option>
+        <option value="TECHIS">TECHIS</option>
+        <option value="OTHERS">Others</option>
+    </select>
+
+    <input type="text" name="organizer_custom" id="organizerCustom"
+           placeholder="Enter organizer" style="display:none; margin-top:10px;">
+
+    <!-- VENUE -->
+    <label>Venue</label>
+    <input type="text" name="venue" required>
+
+    <!-- PRICE -->
+    <label>Price</label>
+    <input type="number" name="price" placeholder="0 = Free">
+
+    <!-- EVENT DATE (VALIDATED) -->
+    <label>Event Date</label>
+    <input type="date" name="event_date" id="eventDate" required>
+
+    <!-- CAPACITY -->
+    <label>Capacity</label>
+    <input type="number" name="capacity" required>
+
+    <!-- EVENT TYPE -->
+    <label>Event Type</label>
+    <select name="event_type">
+        <option>Seminar</option>
+        <option>Workshop</option>
+        <option>Training</option>
+        <option>Competition</option>
+        <option>Other</option>
+    </select>
+
+    <!-- YEAR LEVEL (CHECKLIST DROPDOWN STYLE) -->
+    <label>Eligible Year Levels</label>
+    <div class="checkbox-group">
+        <label><input type="checkbox" name="year_levels" value="1st"> 1st Year</label>
+        <label><input type="checkbox" name="year_levels" value="2nd"> 2nd Year</label>
+        <label><input type="checkbox" name="year_levels" value="3rd"> 3rd Year</label>
+        <label><input type="checkbox" name="year_levels" value="4th"> 4th Year</label>
+    </div>
+
+    <!-- DEPARTMENT -->
+    <label>Department</label>
+    <select name="department">
+        <option>CICS</option>
+        <option>CABE</option>
+        <option>CAS</option>
+        <option>CET</option>
+        <option>CTE</option>
+    </select>
+
+    <!-- PROGRAM -->
+    <label>Program</label>
+    <select name="program">
+        <option>IT</option>
+        <option>BA</option>
+        <option>BSBA</option>
+        <option>CS</option>
+        <option>EDUC</option>
+        <option>OTHER</option>
+    </select>
+
+    <!-- DESCRIPTION -->
+    <label>Short Description</label>
+    <textarea name="short_desc"></textarea>
+
+    <label>Full Description</label>
+    <textarea name="long_desc"></textarea>
+
+    <!-- FILES -->
+    <label>Poster</label>
+    <input type="file" name="poster">
+
+    <label>Icon</label>
+    <input type="file" name="icon">
+
+    <br><br>
+    <button class="btn">Create Event</button>
+
+</form>
+</div>
+
+<!-- ================= JS VALIDATION ================= -->
+<script>
+const today = new Date();
+const maxDate = new Date();
+maxDate.setFullYear(today.getFullYear() + 2);
+
+const input = document.getElementById("eventDate");
+
+input.min = today.toISOString().split("T")[0];
+input.max = maxDate.toISOString().split("T")[0];
+
+function toggleOrganizerInput() {
+    const select = document.getElementById("organizerSelect");
+    const custom = document.getElementById("organizerCustom");
+
+    if (select.value === "OTHERS") {
+        custom.style.display = "block";
+        custom.required = true;
+    } else {
+        custom.style.display = "none";
+        custom.required = false;
+    }
+}
+</script>
+
+{% endblock %}

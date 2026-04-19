@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="card event-details">
+
+    <!-- TOP BAR -->
+    <div class="top-actions">
+        <a href="/catalog" class="back-btn">← Back</a>
+
+        <div>
+            {% if session['user']['role'] == 'admin' %}
+                <a href="/edit_event/{{ event['event_id'] }}" class="btn">Edit</a>
+            {% endif %}
+            <a href="/join/{{ event['event_id'] }}" class="btn">Join</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="details-container">
+
+        <!-- LEFT: LOGO -->
+        <div class="event-logo">
+            <img src="/{{ event['icon'] if event['icon'] else 'static/uploads/default.png' }}">
+        </div>
+
+        <!-- RIGHT: DETAILS -->
+        <div class="event-info">
+
+            <h2>{{ event['event_name'] }}</h2>
+
+            <span class="badge">{{ event['event_type'] or 'Event' }}</span>
+
+            <!-- INFO GRID -->
+            <div class="info-grid">
+
+                <div>
+                    <strong>Date</strong>
+                    <p>{{ event['event_date'] }}</p>
+                </div>
+
+                <div>
+                    <strong>Organizer</strong>
+                    <p>{{ event['organizer'] }}</p>
+                </div>
+
+                <div>
+                    <strong>Venue</strong>
+                    <p>{{ event['venue'] }}</p>
+                </div>
+
+                <div>
+                    <strong>Capacity</strong>
+                    <p>{{ event['capacity'] }}</p>
+                </div>
+
+            </div>
+
+            <h4>Event Description</h4>
+            <p class="desc">
+                {{ event['long_desc'] or 'No description available.' }}
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

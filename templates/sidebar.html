@@ -1,0 +1,32 @@
+<div class="sidebar">
+
+    {% if session['user']['role'] == 'admin' %}
+
+        <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">
+            <span class="icon">📊</span> Dashboard
+        </a>
+
+        <a href="/manage_events" class="{% if request.path == '/manage_events' %}active{% endif %}">
+            <span class="icon">📅</span> Event Manager
+        </a>
+
+        <a href="/create_event" class="{% if request.path == '/create_event' %}active{% endif %}">
+            <span class="icon">➕</span> Add Event
+        </a>
+
+    {% else %}
+
+        <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">
+            <span class="icon">🏠</span> Dashboard
+        </a>
+
+        <a href="/catalog" class="{% if request.path == '/catalog' %}active{% endif %}">
+            <span class="icon">📚</span> Catalog
+        </a>
+
+        <a href="/history" class="{% if request.path == '/history' %}active{% endif %}">
+            <span class="icon">🕓</span> History
+        </a>
+
+    {% endif %}
+</div>

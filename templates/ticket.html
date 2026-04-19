@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="card ticket-box">
+
+    <div class="ticket-left">
+        <img src="{{ url_for('static', filename=qr_img) }}" class="qr">
+    </div>
+
+    <div class="ticket-right">
+        <h2>{{ data['event_name'] }}</h2>
+
+        <p><b>Date:</b> {{ data['event_date'] }}</p>
+        <p><b>Organizer:</b> {{ data['organizer'] }}</p>
+        <p><b>Venue:</b> {{ data['venue'] }}</p>
+
+        <p class="ticket-id">QR: {{ data['qr_code'] }}</p>
+
+        <a href="/ticket_pdf/{{ data['qr_code'] }}" class="btn">Download Ticket</a>
+    </div>
+
+</div>
+
+{% endblock %}

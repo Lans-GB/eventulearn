@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Your Joined Events</h2>
+
+{% for h in data %}
+<div class="card event">
+
+    <div>
+        <h3>{{ h['event_name'] }}</h3>
+        <p>{{ h['event_date'] }}</p>
+    </div>
+
+    <div>
+        <a href="/ticket/{{ h['qr_code'] }}" class="btn">View Ticket</a>
+        <a href="/ticket_pdf/{{ h['qr_code'] }}" class="btn">Download PDF</a>
+    </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}
