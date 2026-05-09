@@ -48,7 +48,7 @@ def dashboard():
 
     db = get_db()
     cursor = db.cursor(dictionary=True)
-    current_date = datetime.now().strftime("%Y-%m-%d")
+    current_date = datetime.now().date()
 
     if session['user']['role'] == 'admin':
         cursor.execute("""
